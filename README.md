@@ -92,7 +92,6 @@ dev:         o---o----o  (v1)         o----o  (v2: adds /delete)
 
 ## Screenshots
 
-> Add the following screenshots here before submitting:
 > 1. ![App health check](image.png)
 > 2. ![Branches](Branches.png)
 > 3. ![Git history](git_repo_branch.png)

@@ -43,6 +43,7 @@ branching workflow (dev → main).
 | `/health`         | GET    | Health check                                    | `App is running` |
 | `/add`            | POST   | Adds a new username/password pair. Body: `{"username": "alice", "password": "secret123"}` | `{"message": "User 'alice' added successfully"}` |
 | `/get/<username>` | GET    | Retrieves the stored password for a username    | `{"username": "alice", "password": "secret123"}` (or `{"error": "User 'bob' not found"}` with a 404 if the user doesn't exist) |
+| `/delete/<username>` | GET or DELETE | Removes a stored user (added in Version 2) | `{"message": "User 'alice' deleted successfully"}` (or `{"error": "User 'alice' not found"}` with a 404 if the user doesn't exist) |
 
 ### Testing with curl
 
@@ -52,6 +53,9 @@ curl -X POST http://localhost:5000/add -H "Content-Type: application/json" -d "{
 
 # Get a user's password
 curl http://localhost:5000/get/alice
+
+# Delete a user
+curl -X DELETE http://localhost:5000/delete/alice
 ```
 
 `/add` must be a POST request (not GET) because it creates/changes data on
@@ -75,8 +79,8 @@ active changes and testing happened.
 
 ```
 main:  ---o------------o----------->  (stable releases only)
-            \          /
-dev:         o---o----o  (v1: /, /health, /add, /get)
+            \          /            \
+dev:         o---o----o  (v1)         o----o  (v2: adds /delete)
 ```
 
 ## Version History
@@ -84,6 +88,7 @@ dev:         o---o----o  (v1: /, /health, /add, /get)
 | Version | What's Included |
 |---------|-----------------|
 | Version 1 | `/` and `/health` endpoints, plus `/add` (POST) and `/get/<username>` (GET) for the password manager |
+| Version 2 | Added `/delete/<username>` endpoint to remove a stored user, built on top of Version 1 |
 
 ## Screenshots
 

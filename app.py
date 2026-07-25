@@ -39,5 +39,14 @@ def get_password(username):
     return jsonify({"username": username, "password": users[username]}), 200
 
 
+@app.route("/delete/<username>", methods=["GET", "DELETE"])
+def delete_user(username):
+    if username not in users:
+        return jsonify({"error": f"User '{username}' not found"}), 404
+
+    del users[username]
+    return jsonify({"message": f"User '{username}' deleted successfully"}), 200
+
+
 if __name__ == "__main__":
     app.run(debug=True)
